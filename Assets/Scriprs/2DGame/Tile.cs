@@ -21,11 +21,14 @@ public class Tile
     public Tile[] adjacents=new Tile[4];
 
     public int autoTileId;
+    public bool CanMove = true;
+
 
     public int fowId;
-
-    public bool isVisited=false;
-    public bool CanMove=true;
+    public bool IsVisited=false;
+    public bool IsExplored = false;
+    public Map map;
+ 
 
 
     public void UpdateAutoTileId()
@@ -40,19 +43,7 @@ public class Tile
             }
         }
     }
-    public void UpdateAutofowId()
-    {
-        fowId = 0;
-
-        for (int i = 0; i < adjacents.Length; ++i)
-        {
-            if (adjacents[i] != null && adjacents[i].isVisited)
-            {
-                fowId |= 1 << adjacents.Length - 1 - i;
-                adjacents[i].isVisited = true;
-            }
-        }
-    }
+ 
 
     public void RemoveAdjacent(Tile tile)
     {
@@ -66,8 +57,7 @@ public class Tile
             {
                 adjacents[i] = null;
                 UpdateAutoTileId();
-                UpdateAutofowId();
-
+            
                 break;
             }
         }
@@ -84,7 +74,7 @@ public class Tile
             adjacents[i] = null;
         }
         UpdateAutoTileId();
-        UpdateAutofowId();
+
 
 
     }

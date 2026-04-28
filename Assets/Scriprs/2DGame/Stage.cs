@@ -135,36 +135,37 @@ public class Stage : MonoBehaviour
         }
     }
 
+
     public void DecorateTile(int tileId)
     {
         var tile = map.tiles[tileId];
         var tilego = tileobjs[tileId];
-
-
-
         var ren = tilego.GetComponent<SpriteRenderer>();
+
         int index = tile.autoTileId;
 
         if (index <= 0 || index >= islandSprite.Length)
-        {
             ren.sprite = null;
-        }
+        else
+            ren.sprite = islandSprite[index];
 
-        else 
+        if (tile.fowId == 0|| tile.fowId == 1)
         {
-     
-            ren.sprite = islandSprite[tile.autoTileId];
-
+            ren.color = Color.white; // 현재 보임
         }
-        //else 
-        //{
-
-        //    ren.sprite = fowprite[tile.fowId];
-
-        //}
-
+        else
+        {
+            ren.sprite = fowprite[2]; // 완전 안개
+            ren.color = Color.white;
+        }
     }
-
+    public void RefreshAllTiles()
+    {
+        for (int i = 0; i < tileobjs.Length; i++)
+        {
+            DecorateTile(i);
+        }
+    }
 
     public int ScreenPosToTileId(Vector3 screenPos)
     {

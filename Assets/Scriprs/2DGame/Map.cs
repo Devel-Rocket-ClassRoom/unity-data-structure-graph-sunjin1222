@@ -83,7 +83,7 @@ public class Map
         for (int i = 0; i < tiles.Length; i++)
         {
             tiles[i].UpdateAutoTileId();
-            tiles[i].UpdateAutofowId();
+
         }
 
 
@@ -132,8 +132,47 @@ public class Map
         
 
     }
+    public void UpdateFog(int playerTileId, int viewRange = 3)
+    {
+        foreach (var tile in tiles)
+        {
+            tile.IsVisited = false;
+        }
 
+        int playerX = playerTileId % cols;
+        int playerY = playerTileId / cols;
 
+        for (int y = -viewRange; y <= viewRange; y++)
+        {
+            for (int x = -viewRange; x <= viewRange; x++)
+            {
+                int checkX = playerX + x;
+                int checkY = playerY + y;
+
+                if (checkX < 0 || checkX >= cols ||
+                    checkY < 0 || checkY >= rows)
+                {
+                    continue;
+                }
+
+                int checkTileId = checkY * cols + checkX;
+                Tile tile = tiles[checkTileId];
+
+                tile.IsVisited = true;
+                tile.IsExplored = true;
+            }
+        }
+
+        foreach (var tile in tiles)
+        {
+            if (tile.IsVisited)
+                tile.fowId = 0;
+            else if (tile.IsExplored)
+                tile.fowId = 1;
+            else
+                tile.fowId = 2;
+        }
+    }
     public bool CreateIsland(float erodePercent, int erodeIterations, float lakePercent, float treePercent, float hillPercent, float mountainPercent, float townPercent, float monsterPercent)
     {
         
