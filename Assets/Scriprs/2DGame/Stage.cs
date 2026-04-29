@@ -32,8 +32,7 @@ public class Stage : MonoBehaviour
     public Vector2 tileSize = new Vector2(16, 16);
 
     public Sprite[] islandSprite;
-
-    public Sprite[] fowprite;
+    public Sprite[] fowSprite;
 
     public Map map;
     private Map Map => map;
@@ -127,7 +126,7 @@ public class Stage : MonoBehaviour
 
                 var newGo = Instantiate(tilePrefabs, transform);
                 newGo.transform.position =GetTilePos(tileId);
-
+                newGo.name = $"{i:d2},{j:d2}";
                 tileobjs[tileId] = newGo;
 
                 DecorateTile(tileId);
@@ -145,9 +144,13 @@ public class Stage : MonoBehaviour
         int index = tile.autoTileId;
 
         if (index <= 0 || index >= islandSprite.Length)
+        {
             ren.sprite = null;
+        }
         else
-            ren.sprite = islandSprite[index];
+        { 
+        ren.sprite = islandSprite[index];
+         }
 
         if (tile.fowId == 0|| tile.fowId == 1)
         {
@@ -155,10 +158,14 @@ public class Stage : MonoBehaviour
         }
         else
         {
-            ren.sprite = fowprite[2]; // 완전 안개
+            ren.sprite = fowSprite[15]; // 완전 안개
             ren.color = Color.white;
         }
     }
+    
+
+
+
     public void RefreshAllTiles()
     {
         for (int i = 0; i < tileobjs.Length; i++)

@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class GraphSearch
 {
-    private Graph graph;
+    public Graph graph;
 
     public List<GraphNode> path = new List<GraphNode>();
 
@@ -307,4 +307,6 @@ public class GraphSearch
 
         return Mathf.Abs(ax - bx) + Mathf.Abs(ay - by);
     }
+
+
 }
